@@ -19,7 +19,7 @@ current: target
 Sources += $(wildcard *.R)
 
 # base.incplots.Rout:
-# base.tsplots.Rout:
+# weitz.tsplots.Rout: weitz.R
 
 %.inc.Rout: %.sim.Rout inc.R
 	$(run-R)

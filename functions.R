@@ -26,10 +26,10 @@ transModel <- function(t,y,params){
 
 		dS <- -T
 		dE <- T - sigma*E 
-		dI <- symp*sigma*E - gI*I
-		dU <- (1-symp)*sigma*E - gU*U
-		dR <- gI*(1-cfr)*I + gU*U
-		dDead <- gI*cfr*I
+		dI <- symp*sigma*E - gammaI*I
+		dU <- (1-symp)*sigma*E - gammaU*U
+		dR <- gammaI*(1-cfr)*I + gammaU*U
+		dDead <- gammaI*cfr*I
 		dCases <- symp*sigma*E 
 		dInfections <- sigma*E
 
