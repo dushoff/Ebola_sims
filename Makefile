@@ -1,19 +1,12 @@
-# Ebola_sims
-### Hooks for the editor to set the default target
+## This is Ebola_sims
+## rescued 2020 Feb 20 (Thu) to do coronavirus sims
+
 current: target
+-include target.mk
 
-target pngtarget pdftarget vtarget acrtarget: notarget
+# -include makestuff/perl.def
 
-##################################################################
-
-
-# make files
-
-Sources = Makefile .gitignore README.md stuff.mk LICENSE.md
-include stuff.mk
-# include $(ms)/perl.def
-
-##################################################################
+######################################################################
 
 ## Content
 
@@ -32,11 +25,22 @@ Sources += $(wildcard *.R)
 
 ### Makestuff
 
-## Change this name to download a new version of the makestuff directory
-# Makefile: start.makestuff
+Sources += Makefile
 
--include $(ms)/git.mk
--include $(ms)/visual.mk
+## Sources += content.mk
+## include content.mk
 
--include $(ms)/wrapR.mk
-# -include $(ms)/oldlatex.mk
+Ignore += makestuff
+msrepo = https://github.com/dushoff
+Makefile: makestuff/Makefile
+makestuff/Makefile:
+	git clone $(msrepo)/makestuff
+	ls $@
+
+-include makestuff/os.mk
+
+## -include makestuff/wrapR.mk
+
+-include makestuff/git.mk
+-include makestuff/visual.mk
+-include makestuff/projdir.mk
