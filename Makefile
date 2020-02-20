@@ -1,5 +1,7 @@
 ## This is Ebola_sims
 ## rescued 2020 Feb 20 (Thu) to do coronavirus sims
+## Should consider: forking two repos (No!)
+## Making clear, overlapping pipelines for different scenarios
 
 current: target
 -include target.mk
@@ -9,8 +11,15 @@ current: target
 ######################################################################
 
 ## Content
+## This was designed entirely for the Bellan subclinical stuff
+## Now adding weitz corona subclinical
+
+## Old sim.R now at ebolaSim.R
 
 Sources += $(wildcard *.R)
+
+# base.incplots.Rout:
+# base.tsplots.Rout:
 
 %.inc.Rout: %.sim.Rout inc.R
 	$(run-R)
@@ -39,7 +48,7 @@ makestuff/Makefile:
 
 -include makestuff/os.mk
 
-## -include makestuff/wrapR.mk
+-include makestuff/wrapR.mk
 
 -include makestuff/git.mk
 -include makestuff/visual.mk

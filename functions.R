@@ -19,22 +19,37 @@ seirModel <- function(t,y,params){
 	})
 }
 
+transModel <- function(t,y,params){
+	with(c(as.list(y),params), {
+		N <- S + E + I + U + R
+		T <- (betaI*I + betaU*U)*S/N 
+
+		dS <- -T
+		dE <- T - sigma*E 
+		dI <- symp*sigma*E - gI*I
+		dU <- (1-symp)*sigma*E - gU*U
+		dR <- gI*(1-cfr)*I + gU*U
+		dDead <- gI*cfr*I
+		dCases <- symp*sigma*E 
+		dInfections <- sigma*E
+
+		return(list(c(
+			dS=dS,dE=dE,dI=dI,dU=dU,dR=dR,
+			dDead=dDead, dCases=dCases, dInfections=dInfections
+		)))
+	})
+}
+
 beta.calc<-function(Ro,params) { 
     with(as.list(params),
     		 Ro*gamma/symp
 )}
 
-makePars <- function(base, R0, symp){
-	base['symp'] <- symp
-	base['beta'] <- beta.calc(R0, base)
-	return(base)
-}
-
-runModel <- function(inits, days, params){
+runModel <- function(inits, days, params, modelFun=transModel){
 	tc <- data.frame(lsoda(
-		inits, days, seirModel, params
+		inits, days, modelFun, params
 	))  
-	tc$N <-  rowSums(tc[,c('S','E','I','R')]) 
+	tc$N <-  rowSums(tc[,c('S','E','I','U','R')]) 
 	names(tc)[[1]] <- "day"
 
 	return(tc)
